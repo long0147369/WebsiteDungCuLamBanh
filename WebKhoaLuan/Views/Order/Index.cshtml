@@ -1,0 +1,119 @@
+﻿
+@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<WebKhoaLuan.Models.DONHANG>
+@{
+    ViewBag.Title = "AllDH";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<style>
+    .pagination {
+        margin-top: 20px;
+        box-sizing: border-box;
+        justify-content: center;
+        list-style: none;
+        display: flex;
+    }
+
+        .pagination li a {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            font-size: 14px;
+            color: #111111;
+            font-weight: 600;
+            line-height: 40px;
+            text-align: center;
+            -webkit-transition: all, 0.3s;
+            -o-transition: all, 0.3s;
+            transition: all, 0.3s;
+            margin-right: 6px;
+        }
+
+            .pagination li a:last-child {
+                margin-right: 0;
+            }
+
+        .pagination li.active a {
+            background: #000;
+            color: #fff;
+        }
+
+        .pagination li a i {
+            font-weight: 600;
+        }
+
+        .pagination li a:hover {
+            background: #0d0d0d;
+            border-color: #0d0d0d;
+            color: #ffffff;
+        }
+</style>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+    <!-- search -->
+    <form action="~/Order/Index" class="search" method="post">
+        <label>
+            <input type="text" name="timkiem" placeholder="Nhập mã đơn hàng">
+            <ion-icon name="search-outline"></ion-icon>
+        </label>
+    </form>
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+
+<div class="details" style="display:inline-block; font-size:13px;">
+    <div class="recentOrders">
+        <div class="cardHeader">
+            <h2>Danh sách đơn hàng</h2>
+            <a href="@Url.Action("ChuaXacNhan","Order")" role="button" class="btn btn-success mt-3" style="background-color:#28A745"><i class="fas fa-clipboard-list"></i> Trạng thái Đơn Hàng</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td style="text-align: start;">Mã ĐH</td>
+                    <td style="text-align: start;">Tên khách hàng</td>
+                    <td style="text-align: start;">Địa chỉ</td>
+                    <td style="text-align: start;">Ngày đặt</td>
+                    <td style="text-align: start;">SĐT</td>
+                    <td style="text-align: start;">Trạng thái</td>
+                    <td style="text-align: start;">Phương thức thanh toán</td>
+                    <td style="text-align: start;">Tổng tiền</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.MADH)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.TAIKHOAN.HOTEN)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.DIACHI)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.NGAYDAT)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.SDTGIAO)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.GIAOHANG.TRANGTHAI)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.PTTHANHTOAN.HINHTHUCTT)</td>
+                        <td style="text-align: start;">@String.Format("{0:0,0}", item.TONGTIEN) VNĐ</td>
+
+
+                        <td style=" display: grid;">
+                            <a href="@Url.Action("DuyetDonHang","Order",new { id = item.MADH })" role="button" class=" btn-success mt-3" style="background-color: #28A745; text-align: center; vertical-align: middle; cursor: pointer; text-decoration: none; border: 1px solid transparent; padding: 6px 3px; border-radius: 4px; margin-bottom: 5px; margin-left: 6px; ">Xem hóa đơn</a>
+                            <a href="@Url.Action("XemDH","Order",new { id = item.MADH })" role="button" class=" btn-success mt-3" style="background-color: #28A745; margin-left: 6px; text-align: center; vertical-align: middle; cursor: pointer; text-decoration: none; border: 1px solid transparent; padding: 6px 3px; border-radius: 4px ">Chi tiết đơn hàng</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align:center;">
+        @Html.PagedListPager(Model, page => Url.Action("Index", "AdminMenu", new { page }))
+    </div>
+</div>

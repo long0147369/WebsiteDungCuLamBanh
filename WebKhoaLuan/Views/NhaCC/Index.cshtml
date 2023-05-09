@@ -1,0 +1,99 @@
+﻿@model IEnumerable<WebKhoaLuan.Models.NHACC>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<style>
+    .pagination {
+        margin-top: 20px;
+        box-sizing: border-box;
+        justify-content: center;
+        list-style: none;
+        display: flex;
+    }
+
+        .pagination li a {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            font-size: 14px;
+            color: #111111;
+            font-weight: 600;
+            line-height: 40px;
+            text-align: center;
+            -webkit-transition: all, 0.3s;
+            -o-transition: all, 0.3s;
+            transition: all, 0.3s;
+            margin-right: 6px;
+        }
+
+            .pagination li a:last-child {
+                margin-right: 0;
+            }
+
+        .pagination li.active a {
+            background: #000;
+            color: #fff;
+        }
+
+        .pagination li a i {
+            font-weight: 600;
+        }
+
+        .pagination li a:hover {
+            background: #0d0d0d;
+            border-color: #0d0d0d;
+            color: #ffffff;
+        }
+</style>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+    <!-- search -->
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+
+<div class="details" style="display:inline-block; font-size:13px;">
+    <div class="recentOrders">
+        <div class="cardHeader">
+            <h2>Danh sách Nhà Cung Cấp</h2>
+            <a href="@Url.Action("Create", "NhaCC")" role="button" class="btn btn-success mt-3" style="background-color:#28A745"><i class="fa fa-plus"></i> Thêm</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td style="text-align: start;">Tên Nhà cung cấp</td>
+                    <td style="text-align: start;">Số điện thoại</td>
+                    <td style="text-align: start;">Địa chỉ</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.TENNCC)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.SDT)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.DIACHI)</td>
+                        <td>
+                            @*<a style="background-color: #006fe6; margin: 4px; max-width: 58px; max-height: 45px; " href="@Url.Action("Details", "NHACCs", new { id = item.MANCC})" role="button" class="btn btn-primary"><i class="far fa-eye"></i></a>*@
+                            <a style="background-color: #28A745; margin: 4px; max-width: 58px; max-height: 45px; " href="@Url.Action("Edit", "NhaCC", new { id = item.MANCC})" role="button" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                            <a style="background-color: #e74c3c; margin: 4px; max-width: 58px; max-height: 45px; " href="@Url.Action("Delete", "NhaCC", new { id = item.MANCC })" role="button" class="btn btn-primary"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+</div>

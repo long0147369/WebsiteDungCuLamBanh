@@ -1,0 +1,111 @@
+﻿@*@using WebKhoaLuan.Models;
+    @model List<SANPHAM>*@
+
+@model PagedList.IPagedList<WebKhoaLuan.Models.SANPHAM>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "SanPhamPartial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="@Url.Action("Index", "Home")"><i class="ti-home"></i> Trang Chủ</a>
+                    <a href="@Url.Action("SanPhamPartial", "SanPham")">Sản Phẩm</a>
+
+                    <span>Tất cả sản phẩm</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row app__content">
+        <div class="col-lg-3 col-md-3 app__content-right">
+            <h4 class="danhmuc__title"><i class="ti-calendar"></i> - Danh Mục</h4>
+            @Html.Action("DanhMucPartial", "Category")
+            <h4 class="danhmuc__title" style="margin-top: 30px;"> <i class="ti-truck"></i> - Nhà cung cấp</h4>
+            @Html.Action("NCCPartial", "Category")
+        </div>
+        <div class="col-9 app__content-left">
+            <div>
+                @*@RenderBody()*@
+                <h4 class="danhmuc__title">Tất cả Sản Phẩm </h4>
+                <div class="row">
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <div class="col-lg-4 col-md-6 col-sm-12" style="padding-bottom:32px">
+
+                                <a class="home-product-item" href="@Url.Action("XemChiTiet","SanPham", new { @ms = item.MASP })">
+                                    <div class="home-product-item__img" style="background-image:url(@Url.Content("~/Images/img_sp/" + item.HINH) ) ;"></div>
+                                    <h4 class="home-product-item__name">
+                                        @item.TENSP
+                                    </h4>
+                                    @if (item.MUCKM != 0)
+                                    {
+                                        <div class="home-product-item__price">
+                                            <span class="home-product-item__price-old">@String.Format("{0:0,0}", item.GIAGOC) </span>
+                                            <span class="home-product-item__price-current">@string.Format("{0:#,##0} VNĐ", (item.GIAGOC - (item.GIAGOC * item.MUCKM)/100))</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="home-product-item__price">
+                                            <span class="home-product-item__price-old" style="text-decoration:none;font-size:1.6rem;color:#000">@String.Format("{0:0,0}", item.GIAGOC) VNĐ</span>
+
+                                        </div>
+                                    }
+                                    <div class="home-product-item__action">
+                                        <span class="home-product-item__like home-product-item__like--liked">
+                                            <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                                            <i class="home-product-item__like-icon-fill fas fa-heart"></i>
+                                        </span>
+                                        <div class="home-product-item__rating">
+                                            <i class="home-product-item__star--gold fas fa-star"></i>
+                                            <i class="home-product-item__star--gold fas fa-star"></i>
+                                            <i class="home-product-item__star--gold fas fa-star"></i>
+                                            <i class="home-product-item__star--gold fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="home-product-item__sold">Còn: @item.SOLUONG</span>
+                                    </div>
+                                    <div class="home-product-item__origin">
+                                        <span class="home-product-item__brand">
+                                            @item.NHACC.TENNCC
+                                        </span>
+                                        @if (item.SOLUONG == 0 || item.SOLUONG == null)
+                                        {
+                                            <span class="home-product-item__origin-name" style="color:red">Hết hàng</span>
+                                        }
+                                    </div>
+                                    
+                                    <div class="home-product-item__favorite">
+                                        <i class="fas fa-check"></i>
+                                        <span>Yêu thích</span>
+                                    </div>
+                                    
+                                    @if (item.MUCKM != 0)
+                                    {
+                                        <div class="home-product-item__sale-off">
+                                            <span class="home-product-item__sale-off-percent">@int.Parse((item.MUCKM).ToString()) %</span>
+                                            <span class="home-product-item__sale-off-label">GIẢM </span>
+                                        </div>
+                                    }
+                                </a>
+
+                            </div>
+                        }
+                    }
+                </div>
+
+                <div class="pagelist">
+                    <a class="pagelist-btn" style="">@Html.PagedListPager(Model, page => Url.Action("SanPhamPartial", new { page })) </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

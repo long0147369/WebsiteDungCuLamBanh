@@ -1,0 +1,67 @@
+﻿@model WebKhoaLuan.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<style>
+    .description-text {
+        margin: 10px;
+    }
+
+    .fixtext {
+        color: red;
+    }
+
+    .ChiTietDH {
+        margin-left: 50px;
+        margin-right: 50px;
+        border: 1px solid;
+        border-radius: 9px;
+        box-shadow: 0 7px 25px rgb(0 0 0 / 8%);
+    }
+</style>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+
+
+<h2 style="text-align:center;margin-top:15px">THÔNG TIN KHÁCH HÀNG</h2>
+
+
+<div class="ChiTietDH">
+    <table class="table" id="table">
+
+
+        <tr>
+            <td colspan="4" style="border-top: 0px solid #ffffff;"><img class="product-img" style="height: 260px; border-radius: 10%; margin-top: 20px; margin-left: 39%; border: 1px solid #007bff; " src="@Url.Content("~/Images/customer/" + Model.HINH)" alt="Ảnh Sản Phẩm" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>UserName: </b> @Model.USERNAME</td>
+            <td colspan="2"><b>Tên khách hàng: </b> @Model.HOTEN</td>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+            <td colspan="2"><b>Email: </b> @Model.EMAIL</td>
+            <td colspan="2"><b>SĐT: </b> @Model.SDT</td>
+        </tr>
+        <tr>
+            <td colspan="4"><b>Địa chỉ: </b> @Model.DIACHI</td>
+        </tr>
+
+    </table>
+</div>
+<div>
+    <a style=" margin: 28px; margin-left: 43px;" href="@Url.Action("Index", "User")" role="button" class="btn btn-primary"><i class="fas fa-angle-left"></i> Trở về</a>
+</div>

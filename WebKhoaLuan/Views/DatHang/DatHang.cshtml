@@ -1,0 +1,212 @@
+﻿@using WebKhoaLuan.Models;
+@model DatHang
+@{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@{
+    IEnumerable<NHACC> lstNCC = ViewBag.MaNCC as IEnumerable<NHACC>;
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<style>
+    .ChiTietDH {
+        margin-left: 50px;
+        margin-right: 50px;
+        border: 1px solid;
+        border-radius: 9px;
+        box-shadow: 0 7px 25px rgb(0 0 0 / 8%);
+    }
+</style>
+
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+<div class="ChiTietDH" style="margin:20px">
+
+    @using (@Html.BeginForm())
+    {
+        <h2 style="text-align:center">Đặt hàng</h2>
+        <a href="@Url.Action("DSSPHetHang","DatHang")" role="button" class="btn btn-success mt-3" style="background-color: #28A745; margin-left: 17px; margin-bottom: 9px;"><i class="fas fa-clipboard-list"></i> Danh sách sản phẩm sắp hết hàng</a>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                Ngày đặt hàng
+            </div>
+            <div class="col-md-3">
+                @Html.TextBoxFor(m => m.NGAYDAT, "{0:yyyy-MM-ddThh:mm:ss}", new { @class = "form-control datepicker", type = "datetime-local", @required = "required" })
+                @Html.ValidationMessageFor(m => m.NGAYDAT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="ThongtinPhieuNhap col-md-6">
+                <div class="col-md-3">
+                    Nhà cung cấp
+                </div>
+                <div class="col-md-6">
+
+                    @if (ViewBag.nhacclst != null)
+                    {
+
+                        @Html.DropDownListFor(model => model.MANCC, ViewBag.nhacclst as SelectList, "-- Chọn nhà cung cấp --", new { @class = "form-control", @required = "required" })
+
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br />
+        <div class="clearfix">  </div>
+        <br />
+        <br />
+        <br />
+        <table class="table tblChiTietPhieuNhap">
+            @{IEnumerable<SANPHAM> lstSanPham = ViewBag.ListSanPham as IEnumerable<SANPHAM>;}
+            <tr class="trAppend" style="display:none;">
+                <td>
+                    @Html.DropDownListFor(model => model.MASP, new SelectList(" "), "Vui lòng chọn nhà cung cấp trước khi chọn sản phẩm", new { @class = "ddlSanPham", @required = "required" })
+                </td>
+                <td>
+                    @*<input name="" class="txtDonGia" value="0" />*@
+                </td>
+                <td>
+                    <input name="" class="txtSoLuong" value="" placeholder="Nhập số lượng" />
+                </td>
+                <td>
+                    <input class="btnDelete btn btn-danger" style="width:30px;height:30px" value="-" />
+                </td>
+            </tr>
+            <tr class="trFirstChild" data-id="-1">
+                <td colspan="2">Sản phẩm</td>
+                @*<td>Đơn giá nhập</td>*@
+                <td colspan="2">Số lượng đặt</td>
+            </tr>
+
+        </table>
+        <div style="margin-bottom:15px; margin-left:15px">
+            <input type="button" value="+" class="btn btn-success" id="btnAdd" />
+            <input type="submit" value="Nhập hàng" class="btn btn-primary" id="btnNhapHang" style="display:none" />
+        </div>
+
+    }
+</div>
+
+<script>
+
+
+            $("#btnAdd").click(function () {                  
+                var id_cuoi = $(".tblChiTietPhieuNhap").find("tr:last-child").attr("data-id");
+                i = parseInt(id_cuoi) + 1;
+                var tdnoidung = $(".trAppend").html();
+                var trnoidung = "<tr class=\"trAppended\" data-id=\"" + i + "\">" + tdnoidung + "</tr>";
+                $(".tblChiTietPhieuNhap").append(trnoidung);
+                $("#btnNhapHang").show();
+                loadIDLENTHE();
+                
+            });
+
+
+            //$("#btnAdd").click(function () {
+            //    ev.preventDefault();
+            //    $('#btnNhapHang').removeClass('hide');
+            //    $('#btnAdd').addClass('hide');
+            //});
+
+            function loadIDLENTHE() {
+                $(".trAppended").each(function () {
+                    var id = $(this).attr("data-id");
+                    var nameMaSanPham = "[" + id + "].MASP";
+                    var nameSoLuongNhap = "[" + id + "].SOLUONGDAT";
+                    //var nameDonGiaNhap = "[" + id + "].GIANHAP";
+                    $(this).find(".ddlSanPham").attr("name", nameMaSanPham);
+                    //$(this).find(".txtDonGia").attr("name", nameDonGiaNhap);
+                    $(this).find(".txtSoLuong").attr("name", nameSoLuongNhap);
+
+                })
+            };
+
+            function CapNhapID() {
+                var id_cuoi = $(".tblChiTietPhieuNhap").find(".trFirstChild").attr("data-id");
+                i = parseInt(id_cuoi) + 1;
+
+                $(".trAppended").each(function () {
+                    var id = i;
+                    $(this).attr("data-id", i);
+                    var nameMaSanPham = "[" + id + "].MASP";
+                    var nameSoLuongNhap = "[" + id + "].SOLUONGDAT";
+                    // var nameDonGiaNhap = "[" + id + "].GIANHAP";
+                    $(this).find(".ddlSanPham").attr("name", nameMaSanPham);
+                    // $(this).find(".txtDonGia").attr("name", nameDonGiaNhap);
+                    $(this).find(".txtSoLuong").attr("name", nameSoLuongNhap);
+                    i++;
+                })
+            }
+
+            $("body").delegate(".btnDelete", "click", function () {
+                $(this).closest("tr").remove();
+                CapNhapID();
+            });
+
+            $("#btnNhapHang").click(function () {
+
+                if (kiemtraDonGia() == false) {
+                    return false;
+                }
+                if (kiemtraSoLuong() == false) {
+                    return false;
+                }
+
+            });
+            //function kiemtraDonGia() {
+            //    var bl = true;
+            //    $(".txtDonGia").each(function () {
+            //        var giatri = $(this).val();
+            //        if (isNaN(giatri) == true) {
+            //            alert("Đơn giá không hợp lệ!");
+            //            bl = false;
+            //            return bl;
+            //        }
+            //    });
+            //    return bl;
+            //}
+            function kiemtraSoLuong() {
+                var bl = true;
+                $(".txtSoLuong").each(function () {
+                    var giatri = $(this).val();
+                    if (isNaN(giatri) == true) {
+                        alert("Số lượng không hợp lệ!");
+                        bl = false;
+                        return bl;
+                    }
+                });
+                return bl;
+            }
+
+
+
+            $(document).ready(function () {
+                $("#MANCC").change(function () {
+                    $.get("/DatHang/GetDistrict", { MANCC: $("#MANCC").val() }, function (data) {
+                        $("#MASP").empty();
+                        $.each(data, function (DatHang, row) {
+                            $("#MASP").append("<option value='" + row.MASP + "'>" + row.TENSP + "</option>")
+                        });
+
+                    });
+                })
+            });
+</script>
+
+
+

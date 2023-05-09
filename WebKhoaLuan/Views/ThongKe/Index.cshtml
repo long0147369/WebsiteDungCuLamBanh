@@ -1,0 +1,196 @@
+﻿@using WebKhoaLuan.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    //tk
+    List<TAIKHOAN> listkh = ViewBag.kh as List<TAIKHOAN>;
+    //Số lượng item đã bán
+    int sl = ViewBag.slItem;
+    //So Item đã bán trong tuần
+    int slW = ViewBag.itemWeek;
+    //Tính tổng thu nhập
+    double total = ViewBag.tongtien;
+}
+
+
+@model List<CHITIETDH>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<style>
+    .pagination {
+        margin-top: 20px;
+        box-sizing: border-box;
+        justify-content: center;
+        list-style: none;
+        display: flex;
+    }
+
+        .pagination li a {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            font-size: 14px;
+            color: #111111;
+            font-weight: 600;
+            line-height: 40px;
+            text-align: center;
+            -webkit-transition: all, 0.3s;
+            -o-transition: all, 0.3s;
+            transition: all, 0.3s;
+            margin-right: 6px;
+        }
+
+            .pagination li a:last-child {
+                margin-right: 0;
+            }
+
+        .pagination li.active a {
+            background: #000;
+            color: #fff;
+        }
+
+        .pagination li a i {
+            font-weight: 600;
+        }
+
+        .pagination li a:hover {
+            background: #0d0d0d;
+            border-color: #0d0d0d;
+            color: #ffffff;
+        }
+
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+
+    #container {
+        height: 400px;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+</style>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+    <!-- search -->
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+
+
+
+<div class="cardbox">
+
+    <div class="card">
+        <div>
+            <div class="numbers">@listkh.Count()</div>
+            <div class="cardName">Khách hàng</div>
+        </div>
+        <div class="iconbox">
+            <ion-icon name="people-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="card">
+        <div>
+            <div class="numbers">@sl</div>
+            <div class="cardName">Sản phẩm đã bán</div>
+        </div>
+        <div class="iconbox">
+            <ion-icon name="cart-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="card">
+        <div>
+            <div class="numbers">@slW</div>
+            <div class="cardName">Tuần này</div>
+        </div>
+        <div class="iconbox">
+            <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+    </div>
+    @*<div class="card">
+            <div>
+                <div class="numbers">@ViewBag.TongDDH</div>
+                <div class="cardName">Tổng số đơn đặt hàng</div>
+            </div>
+            <div class="iconbox">
+                <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+        </div>*@
+
+    <div class="card">
+        <div>
+            <div class="numbers">@string.Format("{0:#,##0} VND", total)</div>
+            <div class="cardName">Tổng thu nhập</div>
+        </div>
+        <div class="iconbox">
+            <ion-icon name="cash-outline"></ion-icon>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+    <p class="highcharts-description">
+
+    </p>
+</figure>
+
+
+<figure class="highcharts-figure">
+    <div id="container1"></div>
+    <p class="highcharts-description">
+
+    </p>
+</figure>
+
+

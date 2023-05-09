@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input name="@ViewBag.success" id="user" value="@ViewBag.success" style="display:none">
+<script src="~/Content/JavaScript.js"></script>
+
+@using (@Html.BeginForm("DangNhap","Home",FormMethod.Post))
+{
+<section class="checkout spad">
+    <div class="login js-popup-login">
+        <div class="popup-wrap js-popup-cont">
+            <div class="form" action="/Home/DangNhap" method="post">
+                <h2 style="text-align: center;">Đăng nhập</h2>
+                @if (Session["ok"] != null)
+                {
+                    <small id="hasUser" style="color: red; font-size:1.4rem">@Session["ok"].ToString()</small>Session["ok"] = null;
+                }
+                <div class="text">
+                    <label for="email">Tên Đăng nhập</label>
+                </div>
+                <div class="form-element">
+                    @*<i class="fas fa-user"></i>*@
+                    <input type="text" id="email" name="txtidUser" placeholder="Nhập vào tài khoản của bạn" required autofocus>
+                </div>
+                <div class="text">
+                    <label for="password">Mật khẩu</label>
+                </div>
+                <div class="form-element">
+                    @*<i class="fas fa-lock"></i>*@
+                    <input type="password" id="password" name="txtPass" placeholder="Nhập vào mật khẩu của bạn" required>
+                </div>
+                @if (Session["tb"] != null)
+                {
+                    <small id="hasUser" style="color: red; font-size:1.4rem">@Session["tb"].ToString()</small>Session["tb"] = null;
+                }
+                <div class=form-element>
+                    <button type="submit">Đăng nhập</button>
+                </div>
+                <div class="form-element">
+                    <a class="form-element__link" href="#">Quên mật khẩu</a>
+                </div>
+
+            </div>
+
+            <div class="form-diff">
+                <p>Hoặc đăng nhập với</p>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="form-diff2">
+                <p>Bạn chưa có tài khoản?</p>
+                <a href="@Url.Action("DangKy","Home")" >Đăng ký tài khoản mới</a>
+            </div>
+        </div>
+    </div>
+    
+</section>}
+

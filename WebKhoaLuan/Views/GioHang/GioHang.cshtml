@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+@using WebKhoaLuan.Models
+@model List<GioHang>
+
+@if (Session["GioHang"] == null)
+{
+    <div class="container" style="padding:32px 0">
+        <div class="giohang" style="border-bottom: 1px solid; padding-bottom: 4px;">
+            <h4 style="color: #a44a3f; font-weight: 600;font-size:19px">CHI TIẾT GIỎ HÀNG</h4>
+        </div>
+        <div class="row" style="margin-top: 18px;">
+            <div class="col-lg-12">
+                <div class="shop__cart__table">
+
+                    <h2>@ViewBag.cart </h2>
+                </div>
+                <a href="@Url.Action("SanPhamPartial", "SanPham")" name="" class="btn btn-danger" style="font-size:1.4rem">
+                    <i class="fas fa-long-arrow-alt-left" style="padding-right: 4px;"></i>
+                    TIẾP TỤC XEM SẢN PHẨM
+                </a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container" style="padding:32px 0">
+        <div class="giohang" style="border-bottom: 1px solid; padding-bottom: 4px;">
+            <h4 style="color: #a44a3f; font-weight: 600;font-size:19px">CHI TIẾT GIỎ HÀNG</h4>
+        </div>
+
+        <div class="row" style="margin-top: 18px;">
+            <div class="col-lg-12 col-md-6">
+                <div class="shop__cart__table">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="cart__product__item" style="padding-right:12px">
+                                        <img src="~/Images/img_sp/@item.sHinhAnh" alt="" style="width: 80px; height:80px;">
+                                        <div class="cart__product__item__title">
+                                            <h6>@item.sTenSP</h6>
+
+                                        </div>
+                                    </td>
+                                    <td class="cart__price">@string.Format("{0:#,##0} VND", item.dDonGia)</td>
+                                    @using (Html.BeginForm("EditQuantity", "GioHang", new { @MASP = item.imaSP }))
+                                    {
+                                        <td class="cart__quantity">
+                                            <div class="pro-qty" style="font-size:2rem">
+
+                                                <input type="number" name="quantity" value="@item.iSoLuong" step="1" min="1" max="99" style="width: 100px;border: 1px solid;" />
+                                            </div>
+                                        </td>
+                                        <td class="cart__total">@string.Format("{0:#,##0} VND", item.dThanhTien)</td>
+
+                                        <td class="cart__close">
+                                            <a href="@Url.Action("XoaGioHang", "GioHang", new { masp = item.imaSP })">
+                                                <i class="fas fa-trash-alt" style="font-size: 2rem; color: #000; padding-right: 50px;"></i>
+                                            </a>
+                                        </td>
+                                        <td class="">
+                                            <div class="cart__btn update__btn" style="margin-bottom:0">
+                                                @*<i class="fas fa-spinner" style="font-size: 2rem; color: #000; padding-right: 10px;"></i>*@
+                                                <input class="update__cart" type="submit" role="button" id="btnUpdate" value="CẬP NHẬT" />
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cart__btn">
+                    <p class="update__cart">@Html.ActionLink("Xóa Giỏ Hàng", "XoaGioHang_All", "GioHang", new { confirm = true }, new { onclick = "return confirm('Xóa tất cả sản phẩm trong giỏ hàng')" })</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+
+            </div>
+            <div class="col-lg-4 offset-lg-2">
+                <div class="cart__total__procced">
+                    <h6></h6>
+                    <ul>
+                        <li>Tổng số lượng SP: <span>@string.Format("{0:#,##0}", ViewBag.tongSoLuong)</span></li>
+                        <li>Tổng tiền:  <span>@string.Format("{0:#,##0} VND", ViewBag.TongThanhTien)</span></li>
+                    </ul>
+                    <a href="@Url.Action("DatHang", "GioHang")" class="btn detail__content-btn-addcart" style="font-size:2rem">Thanh Toán</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

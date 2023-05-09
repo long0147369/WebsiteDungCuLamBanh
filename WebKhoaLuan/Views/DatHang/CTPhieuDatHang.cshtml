@@ -1,0 +1,131 @@
+﻿@using WebKhoaLuan.Models;
+@model PHIEUDATHANG
+@{IEnumerable<CTPHIEUDATHANG> LstCTPDH = (IEnumerable<CTPHIEUDATHANG>)ViewBag.LstCTPDH;}
+@{
+    ViewBag.Title = "CTPhieuDatHang";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .ChiTietDH {
+        margin-left: 50px;
+        margin-right: 50px;
+        border: 1px solid;
+        border-radius: 9px;
+        box-shadow: 0 7px 25px rgb(0 0 0 / 8%);
+    }
+</style>
+
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+
+<br />
+<br />
+@using (Html.BeginForm())
+{
+    <div class="ChiTietDH">
+        <table class="table" id="table" border: 1px solid black;>
+
+
+            <tr>
+                <td colspan="3" style="border-top: 0px solid #ffffff;">
+                    <p style=" margin-bottom: -20px; margin-left: 30px;"><b>CỬA HÀNG DỤNG CỤ LÀM BÁNH</b>  </p> <br />
+                    <p style="margin-left: 52px;"><img src="~/Images/anhlogo.jpg" /></p>
+                    <span>Đ/c:<b> 140 Lê Trọng Tấn, Tây Thạnh, Tân Phú, TP.HCM</b> </span> <br />
+                    <span>Email:<b> dungculambanhhufi@gmail.com</b></span> <br />
+                    <span>SĐT:<b> 034 321 2839</b> </span>
+                </td>
+                @* <td colspan="1">
+                        <p>Mã đơn hàng: <b style="color:red;"> @Model.MADH @Html.Hidden("MaDH", @Model.MADH)</b></p>
+                        <span>Tên khách hàng: <b style="color:red;"> @Model.TAIKHOAN.HOTEN</b></span> <br />
+                        <span>SĐT: <b style="color:red;"> @Model.SDTGIAO</b></span> <br />
+                        <span>Ngày đặt: @Model.NGAYDAT.Value.ToString("dd/MM/yyyy")</span>
+                        <span>Ngày đặt: <b style="color:red;">@Model.NGAYDAT</b> </span>
+
+                        <p>Địa chỉ: <b style="color:red;"> @Model.DIACHI</b></p>
+                    </td>*@
+                <td>
+                    <p>Mã Phiếu Đặt Hàng: <b style="color:red;"> @Model.MAPHIEUDH @Html.Hidden("MAPHIEUDH", @Model.MAPHIEUDH)</b></p>
+                    <p>Nhà cung cấp: <b style="color:red;">@Model.NHACC.TENNCC</b> </p>
+                    <p>Ngày Lập phiếu<b style="color:red;"> @Model.NGAYDAT</b> </p>
+                    <p>Đ/c:.................................</p>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="4"><b style="margin-left: 35%; font-size: 27px;">Thông tin đơn Đặt hàng</b></td>
+
+            </tr>
+            @*<h2 style="text-align:center;margin-top:10px;">  <font color="#f65e84"></font></h2>*@
+            <tr>
+            </tr>
+            <tr border: 1px solid #black;>
+
+
+                <td colspan="2"><b>Tên SP</b></td>
+                <td><b style="margin-left:15px">Số Lượng Đặt</b></td>
+                <td><b style="float:right">Ngày đặt</b></td>
+
+            </tr>
+
+            @foreach (var item in LstCTPDH)
+            {
+                <tr>
+                    <td colspan="2"><p>@item.SANPHAM.TENSP</p></td>
+                    <td><p style="margin-left:15px">@item.SOLUONGDAT</p></td>
+                    <td><p style="float:right">@Model.NGAYDAT</p></td>
+                </tr>
+            }
+
+            @*<tr>
+                    <td colspan="4"><b style=" margin-left: 70%;">Tổng số lượng:</b> @Model.CHITIETDHs.Sum(n => n.SOLUONG) sản phẩm</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><b style=" margin-left: 70%;">Phí Giao Hàng:</b> @String.Format("{0:0,0}", Model.PHISHIP) VNĐ</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><b style=" margin-left: 70%;">Tổng tiền:</b> @String.Format("{0:0,0}", Model.TONGTIEN) VNĐ</td>
+                </tr>*@
+
+
+        </table>
+        <br /><br />
+
+        @*<input type="button" value="In đơn hàng" id="btnInDonHang" />*@
+    </div>
+}
+<div>
+    <a style=" margin: 28px; margin-left: 43px;" href="@Url.Action("PhieuDatHang", "DatHang")" role="button" class="btn btn-primary"><i class="fas fa-angle-left"></i> Trở về</a>
+    <input type="submit" value="In Hóa Đơn" id="btnInDonHang" class="btn btn-default" style="background-color: #28A745; color: #ffffff; margin-left: -20px; " />
+</div>
+
+<script>
+
+    $("#btnInDonHang").click(function () {
+        var content = "<table>" + $("#table").html() + "</table>";
+        InDonHang(content);
+    });
+
+    //Phương thức in
+    function InDonHang(content) {
+        var printWindow = window.open('', '', 'height=400px,width=1000px');
+        printWindow.document.write('<html><head><title>HÓA ĐƠN ĐẶT HÀNG</title>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write(content);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+
+
+    }
+
+</script>

@@ -1,0 +1,80 @@
+﻿@using WebKhoaLuan.Models;
+
+
+@{ TAIKHOAN kh = (TAIKHOAN)Session["kh"]; }
+@if (Session["kh"] != null)
+{   
+    <img src="~/Images/customer/@kh.HINH" alt="Alternate Text" style="width: 25px; height: 25px; border-radius: 50%; margin-top: -8px;" />
+    <div class="header__right__auth">
+        @*<a href="@Url.Action("ThongTin", "KhachHang", new { username = (Model.USERNAME).Trim() })">Hi, @Model.USERNAME</a>*@
+        
+        <ul class="header__right__menu">
+            <li class="header__right__menu-item">
+                
+                <a href="#">Hi, @kh.HOTEN.ToString() </a>
+                <ul class="header__subnav">
+                    <li class="header__subnav-item"><a href="@Url.Action("ThongTinKH", "Home", new { username = (kh.USERNAME).Trim()})"><i class="ti-info-alt"></i>Thông tin</a></li>
+                    <li class="header__subnav-item"><a href="@Url.Action("YCTraHang", "Home", new { username = (kh.USERNAME).Trim()})"><i class="ti-pencil-alt"></i>Yêu Cầu Trả Hàng</a></li>
+                    <li class="header__subnav-item"><a href="@Url.Action("Logout", "Home")"><i class="ti-shift-right"></i>Đăng xuất</a></li>
+                </ul>
+            </li>
+
+        </ul>
+
+    </div>
+    <ul class="header__right__widget">
+        <li class="header__right__widget-item">
+            <i class="fas fa-search"></i>
+
+            <div class="header__search">
+                <form action="/SanPham/SanPhamPartial" method="post">
+                    <h6>Tìm kiếm sản phẩm</h6>
+                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm..." name="timkiem" style=" font-size: 1.6rem;">
+                    <button type="submit" class="btn btn-dark" style=" padding: 0 50px; margin-top: 12px; font-size: 20px;">Tìm kiếm</button>
+                </form>
+            </div>
+        </li>
+        <li>
+            <a href="#">
+                <i class="far fa-heart"></i>
+                <div class="tip">0</div>
+            </a>
+        </li>
+        <li>
+            @Html.Action("GioHangPartial", "GioHang")
+        </li>
+    </ul>
+}
+else
+{
+    <div class="header__right__auth">
+        <a href="@Url.Action("DangNhap", "Home")">Đăng nhập</a>
+        <a>/</a>
+        <a href="@Url.Action("DangKy", "Home")">Đăng ký</a>
+    </div>
+    <ul class="header__right__widget">
+        <li class="header__right__widget-item">
+            <i class="fas fa-search"></i>
+
+            <div class="header__search">
+                <form action="/SanPham/SanPhamPartial" method="post">
+                    <h6>Tìm kiếm sản phẩm</h6>
+                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm..." name="timkiem" style=" font-size: 1.6rem;">
+                    <button type="submit" class="btn btn-dark" style=" padding: 0 50px; margin-top: 12px; font-size: 20px;">Tìm kiếm</button>
+                </form>
+            </div>
+        </li>
+        <li>
+            <a href="#">
+                <i class="far fa-heart"></i>
+                <div class="tip">0</div>
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("GioHang", "GioHang")">
+                <i class="fas fa-cart-plus"></i>
+                <div class="tip">(@ViewBag.tongSoLuong)</div>
+            </a>
+        </li>
+    </ul>         
+}

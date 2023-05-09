@@ -1,0 +1,15 @@
+﻿@using WebKhoaLuan.Models;
+@model List<LOAISP>
+
+
+<ul class="danhmuc-list">
+    @{
+        foreach (var item in Model)
+        {
+
+            <li class="danhmuc-item">
+                <a class="danhmuc-item--link" href="@Url.Action("SPTheoDM", "Category", new {@ms=item.MALOAI})" ><i class="ti-control-forward" aria-hidden="true"></i> @item.TENLOAI</a>
+            </li>
+        }
+    }
+</ul>

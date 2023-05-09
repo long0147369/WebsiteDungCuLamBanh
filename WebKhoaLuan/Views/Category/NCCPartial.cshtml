@@ -1,0 +1,14 @@
+﻿@using WebKhoaLuan.Models;
+@model List<NHACC>
+
+
+<ul class="danhmuc-list">
+    @{
+        foreach (var item in Model)
+        {
+            <li class="danhmuc-item">
+                <a class="danhmuc-item--link" href="@Url.Action("SPTheoNCC", "Category", new {@mancc=item.MANCC})"><i class="ti-control-forward" aria-hidden="true"></i> @item.TENNCC</a>
+            </li>
+        }
+    }
+</ul>

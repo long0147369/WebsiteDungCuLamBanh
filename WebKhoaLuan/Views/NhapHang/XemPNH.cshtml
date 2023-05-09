@@ -1,0 +1,121 @@
+﻿@using WebKhoaLuan.Models;
+
+@model PHIEUNHAPHANG
+@{IEnumerable<CTPHIEUNHAPHANG> lstCTPNN = (IEnumerable<CTPHIEUNHAPHANG>)ViewBag.lstCTPNN;}
+
+@{
+    ViewBag.Title = "XemPNH";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .pagination {
+        margin-top: 20px;
+        box-sizing: border-box;
+        justify-content: center;
+        list-style: none;
+        display: flex;
+    }
+
+        .pagination li a {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            font-size: 14px;
+            color: #111111;
+            font-weight: 600;
+            line-height: 40px;
+            text-align: center;
+            -webkit-transition: all, 0.3s;
+            -o-transition: all, 0.3s;
+            transition: all, 0.3s;
+            margin-right: 6px;
+        }
+
+            .pagination li a:last-child {
+                margin-right: 0;
+            }
+
+        .pagination li.active a {
+            background: #000;
+            color: #fff;
+        }
+
+        .pagination li a i {
+            font-weight: 600;
+        }
+
+        .pagination li a:hover {
+            background: #0d0d0d;
+            border-color: #0d0d0d;
+            color: #ffffff;
+        }
+</style>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+
+<div class="details" style="display:inline-block; font-size:13px;">
+    <div class="recentOrders">
+        <div class="cardHeader">
+            <h2>Thông tin Phiếu nhập hàng</h2>
+
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td style="text-align: start;">MP Nhập Hàng</td>
+                    <td style="text-align: start;">MP Đặt Hàng</td>
+                    <td style="text-align: start;">Nhà cung cấp</td>
+                    <td style="text-align: start;">Tên SP</td>
+                    <td style="text-align: start;">Số lượng Nhập</td>
+                    <td style="text-align: start;">Giá nhập</td>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in lstCTPNN)
+                {
+                    <tr>
+                        <td style="text-align: start;"> @Model.MAPHIEUNH @Html.Hidden("MAPHIEUNH", @Model.MAPHIEUNH)</td>
+                        <td style="text-align: start;"> @Model.MAPHIEUDH @Html.Hidden("MAPHIEUDH", @Model.MAPHIEUDH)</td>
+                        <td style="text-align: start;">@Model.NHACC.TENNCC</td>
+                        <td style="text-align: start;">@item.SANPHAM.TENSP</td>
+                        @*<td style="text-align: start;"><img style="width: 100px; height: 100px; border-radius: 10px; border: 1px solid #007bff;" src="@Url.Content("~/Images/img_sp/" + item.SANPHAM.HINH)" /></td>*@
+                        @*<td style="text-align: start;">@Model.CHITIETDHs.Sum(n => n.SOLUONG)</td>*@
+                        <td style="text-align: start;">@item.SOLUONGNHAP</td>
+                        <td style="text-align: start;">@item.GIANHAP</td>
+                        <td style="display:flex;">
+                            <a href="@Url.Action("Edit","NhapHang",new { id = item.MACTPNH })" role="button" class=" btn-success mt-3" style="background-color: #28A745; margin-left: 6px; text-align: center; vertical-align: middle; cursor: pointer; text-decoration: none; border: 1px solid transparent; padding: 8px 8px; border-radius: 3px "><i class="fas fa-cart-arrow-down"></i></a>
+
+                            <a href="@Url.Action("Delete","NhapHang",new { id = item.MACTPNH })" role="button" class=" btn-success mt-3" style="background-color: #e74c3c; margin-left: 6px; text-align: center; vertical-align: middle; cursor: pointer; text-decoration: none; border: 1px solid transparent; padding: 8px 8px; border-radius: 3px "><i class="far fa-trash-alt"></i></a>
+
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+</div>
+<div>
+    <a style=" margin: 28px; margin-left: 43px;" href="@Url.Action("Index", "NhapHang")" role="button" class="btn btn-primary"><i class="fas fa-angle-left"></i> Trở về</a>
+</div>
+
+
+

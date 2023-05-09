@@ -1,0 +1,148 @@
+﻿@*@model IEnumerable<WebKhoaLuan.Models.TAIKHOAN>*@
+@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<WebKhoaLuan.Models.TAIKHOAN>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .pagination {
+        margin-top: 20px;
+        box-sizing: border-box;
+        justify-content: center;
+        list-style: none;
+        display: flex;
+    }
+
+        .pagination li a {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            font-size: 14px;
+            color: #111111;
+            font-weight: 600;
+            line-height: 40px;
+            text-align: center;
+            -webkit-transition: all, 0.3s;
+            -o-transition: all, 0.3s;
+            transition: all, 0.3s;
+            margin-right: 6px;
+        }
+
+            .pagination li a:last-child {
+                margin-right: 0;
+            }
+
+        .pagination li.active a {
+            background: #000;
+            color: #fff;
+        }
+
+        .pagination li a i {
+            font-weight: 600;
+        }
+
+        .pagination li a:hover {
+            background: #0d0d0d;
+            border-color: #0d0d0d;
+            color: #ffffff;
+        }
+</style>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+    <!-- search -->
+    <form action="~/User/Index" class="search" method="post">
+        <label>
+            <input type="text" name="timkiem" placeholder="Nhập tên Khách hàng">
+            <ion-icon name="search-outline"></ion-icon>
+        </label>
+    </form>
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+
+<div class="details" style="display:inline-block; font-size:13px;">
+    <div class="recentOrders">
+        <div class="cardHeader">
+            <h2>Danh sách Tài Khoản</h2>
+
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td style="text-align: start;">User</td>
+                    <td style="text-align: start;">Họ tên</td>
+                    <td style="text-align: start;">Email</td>
+                    <td style="text-align: start;">SĐT</td>
+                    <td style="text-align: start;">Địa chỉ</td>
+                    <td style="text-align: start;">Hình</td>
+                    <td style="text-align: start;">Trạng thái</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.USERNAME)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.HOTEN)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.EMAIL)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.SDT)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.DIACHI)</td>
+                        <td style="text-align: start;"><img style="width: 100px; height: 100px; border-radius: 10px; border: 1px solid #007bff;" src="@Url.Content("~/Images/customer/" + item.HINH)" /></td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.TRANGTHAI)</td>
+
+                        <td style="width:15px">
+                            <a style="background-color: #006fe6; margin: 4px; max-width: 58px; max-height: 45px; " href="@Url.Action("Details","User",new {@id = item.USERNAME })" role="button" class="btn btn-primary"><i class="far fa-eye"></i></a>
+                         </td>
+
+                            @if (item.TRANGTHAI == true)
+                            {
+                                              
+                                <td class="text-center">
+                                <a href="@Url.Action("LockorUnlock","User",new {@id = item.USERNAME })" id="blockUser" class="btn btn-sm btn btn-success">
+                                    <i style="padding:8px 8px" class="fas fa-lock"></i>
+                                </a>
+                            </td>
+                        }
+                        else if (item.TRANGTHAI == false)
+                        {
+                            <td class="text-center">
+                                <a href="@Url.Action("LockorUnlock","User",new {@id = item.USERNAME })" id="openUser" class="btn btn-sm btn btn-danger">
+                                    <i style="padding:8px 8px" class="fas fa-unlock"></i>
+                                </a>
+                            </td>
+                        }
+                        </tr>
+                    }
+            </tbody>
+        </table>
+
+
+    </div>
+    <div style="text-align:center;">
+        @Html.PagedListPager(Model, page => Url.Action("Index", "AdminMenu", new { page }))
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    document.getElementById('blockUser')
+        .addEventListener('click', function () {
+            toastr.warning('Đã khóa tài khoản');        
+        });
+</script>
+
+<script>
+    document.getElementById('openUser')
+        .addEventListener('click', function () {
+            toastr.success('Đã mở khóa tài khoản');
+        });
+</script>

@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "XacNhanDonHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using WebKhoaLuan.Models;
+@model List<GioHang>
+
+@using (Html.BeginForm("XacNhanDonHang", "GioHang"))
+{
+    <div class="container" style="padding:20px">
+
+        <h4 style="padding:16px">CÁM ƠN QUÝ KHÁCH ĐÃ MUA HÀNG CỦA CHÚNG TÔI</h4>
+
+
+        <div style="border: 1px solid #333;">
+
+            <div style=" text-align: left; padding-left: 32px;">
+                @{DONHANG ddh = ((DONHANG)Session["HoaDon"]);
+                    <h5 style="padding-top: 12px;">&ensp;Mã hoá đơn: @ddh.MADH</h5>
+                    <h5 style="padding-top: 12px;">&ensp;Phương thức thanh toán: @Session["ThanhToan"]</h5>
+                    <h5 style="padding-top: 12px;">&ensp;Ngày lập: @ddh.NGAYDAT</h5>
+                    <h5 style="padding-top: 12px;">&ensp;Thông tin đơn hàng: </h5>
+                    <ul style="list-style: none;">
+                        @foreach (var item in Model)
+                        {
+                        <li style="font-size: 1.4rem; padding: 12px 20px; font-weight: 500;">
+                            + @item.sTenSP - (Số lượng: @item.iSoLuong) - Đơn Giá: @String.Format("{0:0,0}", item.dDonGia) VNĐ
+
+                        </li>
+                        }
+                    </ul>
+                    <h5 style="padding-top: 12px; border-bottom: 1px solid #333; width: 80%">&ensp;Phí giao hàng: @String.Format("{0:0}", @ddh.PHISHIP) VNĐ </h5>
+                    <h5 style="padding-top: 12px;">&ensp;Tổng cộng:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@String.Format("{0:0,0}", @ddh.TONGTIEN) VNĐ </h5>
+                }
+            </div>
+            <div style=" padding: 12px 0 12px 170px;">
+                <button type="submit" style="border-radius: 4px;box-sizing: border-box;cursor: pointer;font-weight: 500;background-color: #a44a3f;font-size: 2rem;padding: 12px;color: #FFF;">
+                    XÁC NHẬN
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+}
+

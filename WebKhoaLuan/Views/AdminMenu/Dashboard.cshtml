@@ -1,0 +1,141 @@
+﻿@using WebKhoaLuan.Models;
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    //tk
+    List<TAIKHOAN> listkh = ViewBag.kh as List<TAIKHOAN>;
+    //Số lượng item đã bán
+    int sl = ViewBag.slItem;
+    //So Item đã bán trong tuần
+    int slW = ViewBag.itemWeek;
+    //Tính tổng thu nhập
+    double total = ViewBag.tongtien;
+}
+@model List<CHITIETDH>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+    <!-- search -->
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+<!-- cards -->
+<div class="cardbox">
+
+    <div class="card">
+        <div>
+            <div class="numbers">@ViewBag.SoNguoiTruyCap</div>
+            <div class="cardName">Lượt truy cập trang</div>
+        </div>
+        <div class="iconbox">
+            <ion-icon name="eye-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="card">
+        <div>
+            <div class="numbers"> @ViewBag.SoLuongNguoiOnline</div>
+            <div class="cardName">Số người online</div>
+        </div>
+        <div class="iconbox">
+            <ion-icon name="person-outline"></ion-icon>
+        </div>
+    </div>
+
+    @*<div class="card">
+            <div>
+                <div class="numbers">@listkh.Count()</div>
+                <div class="cardName">Khách hàng</div>
+            </div>
+            <div class="iconbox">
+                <ion-icon name="people-outline"></ion-icon>
+            </div>
+        </div>*@
+    @*<div class="card">
+            <div>
+                <div class="numbers">@sl</div>
+                <div class="cardName">Sản phẩm đã bán</div>
+            </div>
+            <div class="iconbox">
+                <ion-icon name="cart-outline"></ion-icon>
+            </div>
+        </div>*@
+    <div class="card">
+        <div>
+            <div class="numbers">@slW</div>
+            <div class="cardName">Tuần này</div>
+        </div>
+        <div class="iconbox">
+            <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="card">
+        <div>
+            <div class="numbers">@string.Format("{0:#,##0} VND", total)</div>
+            <div class="cardName">Tổng thu nhập</div>
+        </div>
+        <div class="iconbox">
+            <ion-icon name="cash-outline"></ion-icon>
+        </div>
+    </div>
+</div>
+<!-- end card -->
+<!-- Order details list -->
+<div class="details">
+    <div class="recentOrders">
+        <div class="cardHeader">
+            <h2>Sản phẩm đã bán gần đây</h2>
+            <a margin: 28px; margin-left: 43px;" href="@Url.Action("Index", "Order")" role="button" class="btn btn-primary"> View All</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Mã HD</td>
+                    <td style="text-align: start;">Tên sản phẩm</td>
+                    <td>Số lượng</td>
+                    <td>Đơn giá</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (CHITIETDH c in Model.Take(10))
+                {
+                    <tr>
+                        <td>@c.MADH</td>
+                        <td style="text-align: start;">@c.SANPHAM.TENSP</td>
+                        <td>@c.SOLUONG</td>
+
+                        <td>@String.Format("{0:0,0}", c.DONGIA) VNĐ</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- start recentCustomers -->
+    <div class="recentCustomers">
+        <div class="cardHeader">
+            <h2>Top khách hàng</h2>
+        </div>
+        <table>
+            @*<tr>
+                    <td style="width: 60px;"><div class="imgBx"><img src="./logobakernew.jpg" alt=""></div></td>
+                    <td><h4>David</h4><br> <span>Italy</span></td></tr>
+                </tr>*@
+
+            @foreach (TAIKHOAN k in listkh.Take(8))
+            {
+                <tr>
+                    <td><h4>@k.HOTEN</h4><span style="color:#999">@k.SDT</span></td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <!-- end recentCustomers -->
+</div>
+<!-- end -->

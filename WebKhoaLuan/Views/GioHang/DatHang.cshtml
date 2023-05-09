@@ -1,0 +1,177 @@
+﻿@using WebKhoaLuan.Models;
+@{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<GioHang>
+
+
+<div class="container" style="padding-top:6%">
+    <div class="dathang__content">
+        @using (@Html.BeginForm("DatHang", "GioHang"))
+        {
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    @{
+                        TAIKHOAN kh = (TAIKHOAN)Session["kh"];
+                    }
+
+                    <h4 style="color: #a44a3f; font-weight: 600;font-size:19px">CHI TIẾT ĐƠN HÀNG</h4>
+                    <div class="row" style="padding-top:28px">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="dathang__form">
+                                <p>Người nhận <span>*</span></p>
+                                <input type="text" value="@kh.HOTEN" readonly />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="dathang__form">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="dathang__form">
+                                <p>Địa Chỉ <span>*</span><a href="https://localhost:44367/Home/ThongTinKH" style="color:#111111">(Thay đổi)</a></p> 
+                                <input type="text" name="txtDC" value="@kh.DIACHI" readonly />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="dathang__form">
+                                <p>Số Điện Thoại <span>*</span></p>
+                                <input type="text" name="txtSDT" value="@kh.SDT" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="dathang__form">
+                                <p>Email <span>*</span></p>
+                                <input type="text" value="@kh.EMAIL" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="checkout__order">
+                        <h5 style="font-weight:bold;">GIỎ HÀNG</h5>
+                        <div class="checkout__order__product">
+                            <ul>
+                                <li>
+                                    <span class="top__text">Sản phẩm</span>
+                                    <span class="top__text__right">Giá</span>
+                                </li>
+                                @{ int num = 1;
+                                    foreach (var c in Model)
+                                    {
+                                        <li>@num. @c.sTenSP (SL: @c.iSoLuong) <span>@string.Format("{0:#,##0} VND", c.dThanhTien)</span></li>
+                                        num++;
+                                    } }
+                                <li style="border-top:1px solid #ccc">Tổng Tiền <span>@string.Format("{0:#,##0} VND", ViewBag.TongTien)</span></li>
+                            </ul>
+                        </div>
+                        @{
+                            string s = kh.DIACHI;
+                            string[] arr = s.Split(',');
+
+                            string[] dsDCNT = { "1", "2", "3", "4", "5", "6", "7", "8", "10", "11", "Bình Thạnh", "Gò Vấp", "Phú Nhuận", "Tân Bình", "Tân Phú" };
+                            string[] dsDCNT1 = { "9", "12", "Thủ Đức", "Bình Tân", "Nhà Bè", "Bình Chánh", "Hóc Môn", "Củ Chi" };
+                            int i = 0;
+                            for (i = 0; i < dsDCNT.Length; i++)
+                            {
+                                if (arr[arr.Length - 2].Contains(dsDCNT[i]) == true)
+                                {
+                                    <div class="dathang__form">
+                                        <p>Phí giao hàng<span>*</span></p>
+                                        <input type="text" name="txtTienship" value="0" readonly  style="text-align: right; padding-right: 20px; font-size: 18px; }"/>
+                                    </div>
+
+                                    break;
+                                }
+                            }
+                            if (i == dsDCNT.Length)
+                            {
+                                int j = 0;
+                                for (j = 0; j < dsDCNT1.Length; j++)
+                                {
+                                    if (arr[arr.Length - 2].Contains(dsDCNT1[j]) == true)
+                                    {
+                                        <div class="dathang__form">
+                                            <p>Phí giao hàng<span>*</span></p>
+                                            <input type="text" name="txtTienship" value=@string.Format("{0:#,##0}", 15000) readonly style="text-align: right; padding-right: 20px; font-size: 18px; }"/>
+                                        </div>
+
+                                        break;
+                                    }
+                                }
+                                if (j == dsDCNT1.Length)
+                                {
+                                    <div class="dathang__form">
+                                        <p>Phí giao hàng<span>*</span></p>
+                                        <input type="text" name="txtTienship" value=@string.Format("{0:#,##0}", 30000) readonly style="text-align: right; padding-right: 20px; font-size: 18px; }" />
+                                    </div> 
+
+                                }
+                            }
+                        }
+                        <div class="checkout__order__total">
+                            <ul>
+                                
+                                <li>Tổng Thanh Toán <span>@string.Format("{0:#,##0} VNĐ", ViewBag.TongThanhTien)</span></li>
+                            </ul>
+                        </div>
+                        <div class="checkout__pttt">
+                            <input class="radio-test" type="radio" name="checkpttt" id="test-1" checked="checked" value="NH">
+                            <label class="label" for="test-1" id="label-test-1">
+                                Thanh toán khi nhận hàng
+                            </label>
+                            <br />
+                            <input class="radio-test" type="radio" name="checkpttt" id="test-2" value="PP">
+                            <label class="label" for="test-2" id="label-test-2">
+                                Thanh toán qua Paypal
+                            </label>
+                            <div id="content-test-1" class="content content-test-1">
+                                <div class="btn__check">
+                                    <button type="submit" class="btn btn-danger" style="padding: 8px 80px; width: 100%;">ĐẶT HÀNG NGAY</button>
+                                </div>
+                            </div>
+                            <div id="content-test-2" class="content content-test-2">
+                                <form id="myForm">
+                                    <div id="paypal-button-container"></div>
+                                    <button id="next" type="submit" style=" display:none"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+
+<script src="https://www.paypal.com/sdk/js?client-id=ARpOHO03Xa-RGEJj6chMazG2rAbc7uQf03X9h7hbnuyD37oSN2wj_VK0imfZ_qNzX0KaeBnD4TDdRrHg">
+</script>
+<script>
+                paypal.Buttons({
+                                    createOrder: function (data, actions) {
+                                            // This function sets up the details of the transaction, including the amount and line item details.
+                                            return actions.order.create({
+                                            purchase_units: [{
+                                                amount: {
+                                                    value: '@ViewBag.TongThanhTien'
+                                                }
+                                                }]
+                        });
+                                        },
+                    onApprove: function (data, actions) {
+                                            // This function captures the funds from the transaction.
+                                            return actions.order.capture().then(function (details) {
+                                                // This function shows a transaction success message to your buyer.
+
+                                                alert('Thanh toán thành công cho ' + details.payer.name.given_name);
+                                                document.getElementById("next").click();
+                                            });
+                                        }
+                                    }).render('#paypal-button-container');
+                                    //This function displays Smart Payment Buttons on your web page.
+</script>

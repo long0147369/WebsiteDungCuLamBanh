@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="445d012706fc4626a3994b68be81e3b1" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="QL_LAMBANHModel.BANGGIA" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.CHITIETDH" Width="1.5" PointX="11.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.CTPHIEUDATHANG" Width="1.5" PointX="8.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.CTPHIEUNHAPHANG" Width="1.5" PointX="13.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.DONHANG" Width="1.5" PointX="9" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.GIAOHANG" Width="1.5" PointX="6.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.KHUYENMAI" Width="1.5" PointX="3.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.LOAISP" Width="1.5" PointX="3.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.NHACC" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.PHIEUDATHANG" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.PHIEUNHAPHANG" Width="1.5" PointX="8.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.PHIEUTRAHANG" Width="1.5" PointX="11.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.PTTHANHTOAN" Width="1.5" PointX="6.75" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.SANPHAM" Width="1.5" PointX="6" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.SPTHICH" Width="1.5" PointX="11.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.TAIKHOAN" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_LAMBANHModel.THONGBAO" Width="1.5" PointX="14.25" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_CHITIETDH_DONHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_CHITIETDH_SANPHAM" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_CTPHIEUDATHANG_PHIEUDATHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_CTPHIEUDATHANG_SANPHAM" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_CTPHIEUNHAPHANG_PHIEUNHAPHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_CTPN_SP" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_DONHANG_GIAOHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_DONHANG_PTTT" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_DONHANG_TAIKHOAN" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_PHIEUTRAHANG_DONHANG1" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_CTKM_SP" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_SANPHAM_LOAISP" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_PHIEUDATHANGHANG_NCC" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_PHIEUNHAPHANG_NHACC" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_SANPHAM_NCC" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_PHIEUDATHANGHANG_TK" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_PHIEUNHAPHANG_PHIEUDATHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_PHIEUNHAPHANG_TK" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_SPT_SP" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_SPT_TK" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_LAMBANHModel.FK_THONGBAO_TAIKHOAN" ManuallyRouted="true" >
+          <ConnectorPoint PointX="1.4566326153846152" PointY="5.5859993489583326" />
+          <ConnectorPoint PointX="1.4566326153846152" PointY="6.5" />
+          <ConnectorPoint PointX="2.5" PointY="6.5" />
+          <ConnectorPoint PointX="2.5" PointY="9.9324446614583337" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="9.9324446614583337" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="9.9324446614583337" />
+          <ConnectorPoint PointX="5.6875" PointY="9.9324446614583337" />
+          <ConnectorPoint PointX="5.6875" PointY="10.723369140624998" />
+          <ConnectorPoint PointX="6.260416666666667" PointY="10.723369140624998" />
+          <ConnectorPoint PointX="6.427083333333333" PointY="10.723369140624998" />
+          <ConnectorPoint PointX="10.791666666666666" PointY="10.723369140624998" />
+          <ConnectorPoint PointX="10.958333333333334" PointY="10.723369140624998" />
+          <ConnectorPoint PointX="13.875" PointY="10.723369140624998" />
+          <ConnectorPoint PointX="13.875" PointY="9.8362939453125" />
+          <ConnectorPoint PointX="14.25" PointY="9.8362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="QL_LAMBANHModel.FK_THONGBAO_DONHANG" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

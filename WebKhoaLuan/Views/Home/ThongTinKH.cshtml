@@ -1,0 +1,590 @@
+﻿@using WebKhoaLuan.Models
+@{
+    ViewBag.Title = "ThongTinKH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<CHITIETDH> cthd = ViewBag.cthd as List<CHITIETDH>;
+    List<DONHANG> hoadon = ViewBag.lhd as List<DONHANG>;
+    List<PHIEUTRAHANG> ipth = ViewBag.pth as List<PHIEUTRAHANG>;
+
+}
+@model TAIKHOAN
+
+
+@{
+    var s = Model.HOTEN;
+
+}
+@functions{
+    public string getName(int masp)
+    {
+        QL_LAMBANHEntities db = new QL_LAMBANHEntities();
+        SANPHAM sp = db.SANPHAMs.Single(s => s.MASP == masp);
+        return sp.TENSP.ToString();
+    }
+    public string getImg(int masp)
+    {
+        QL_LAMBANHEntities db = new QL_LAMBANHEntities();
+        SANPHAM sp = db.SANPHAMs.Single(s => s.MASP == masp);
+        return sp.HINH.ToString();
+    }
+    public string getDate(string mahd)
+    {
+        QL_LAMBANHEntities db = new QL_LAMBANHEntities();
+        DONHANG h = db.DONHANGs.Single(hd => hd.MADH == mahd);
+        return h.NGAYDAT.ToString();
+    }
+
+}
+
+
+
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="@Url.Action("Index", "Home")"><i class="ti-home"></i> Home</a>
+                    <span>Thông tin tài khoản</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="info__customer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 text-left" style="margin-top: -100px;">
+                <div class="info__customer__tab">
+                    <ul class="nav nav-tabs flex-column" role="tablist">
+                        <li class="options__link">
+                            <a class="nav-link active" style="font-weight:500;" data-toggle="tab" href="#tabs-1" role="tab">LỊCH SỬ GIAO DỊCH ( @hoadon.Count() )</a>
+                        </li>
+                        <li class="options__link">
+                            <a class="nav-link" style="font-weight:500;" data-toggle="tab" href="#tabs-2" role="tab">THÔNG TIN TÀI KHOẢN</a>
+                        </li>
+
+                        <li class="options__link">
+                            <a class="nav-link" style="font-weight:500;" data-toggle="tab" href="#tabs-7" role="tab">YÊU CẦU ĐÃ GỬI ( @ipth.Count() )</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9" style="margin-top: -90px;">
+                <div class="info__customer__tab">
+                    <div class="tab-content">
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <h6>THÔNG TIN TÀI KHOẢN</h6>
+                            <p style="width:50%; float:left;margin-top:12px;">Username : @Model.USERNAME</p>
+                            <span style="float:left;font-size:10px;margin-top:45px;"></span>
+                            <span>
+                                <img id="imgPreview" src="~/Images/customer/@Model.HINH" style="width:100px; height:100px; border-radius:50%; float:right;" />
+                            </span>
+                            <section class="checkout spad">
+                                <div class="container">
+                                    <form action="/Home/UpdateThongTin" method="post" class="checkout__form mt-5" enctype="multipart/form-data">
+                                        <input type="file" name="fileupload" accept="image/jpeg, image/png" onchange="ShowImagePreview(this,document.getElementById('imgPreview'));" style="font-size: 16px;" />
+                                        <div class="row mt-3">
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="checkout__form__input">
+                                                            <p>Họ Tên<span>*</span></p>
+                                                            <input type="text" name="txtHoTen" value="@s.ToString()" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="checkout__form__input">
+                                                            <p>Tên tài khoản <span>*</span></p>
+                                                            <input type="text" name="txtUsername" disabled="disabled" value="@Model.USERNAME" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="checkout__form__input">
+                                                            <p>Số Điện Thoại <span>*</span></p>
+                                                            <input type="text" name="txtPhone" value="@Model.SDT" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="checkout__form__input">
+                                                            <p>Email <span>*</span></p>
+                                                            <input type="text" name="txtEmail" value="@Model.EMAIL" disabled="disabled" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="checkout__form__input">
+                                                            <p>Địa Chỉ <span>*</span></p>
+                                                            <input type="text" name="txtAddress" value="@Model.DIACHI" placeholder="Ví dụ: Số nhà 99, đường Lê Lợi, Quận 1, TP.HCM" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 text-center"><button type="submit" class="btn btn-danger" id="btnRegister" style=" font-size: 18px;">Cập Nhật</button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <h6>ĐƠN HÀNG ĐÃ ĐẶT CỦA BẠN ( @hoadon.Count() )</h6>
+                            @if (Session["er"] != null)
+                            {
+                                <small id="hasUser" style="color: red; font-size:1.4rem">(@Session["er"].ToString())</small>Session["er"] = null;
+                            }
+
+                            <div class="col-lg-12">
+                                <ul class=" nav nav-tabs" role="tablist" style="align-items: center;">
+                                    <li class=" nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#tabs-3" role="tab"><i class="ti-alert"></i> Chờ xác nhận</a>
+                                    </li>
+                                    <li class="nav-item">||</li>
+                                    <li class=" nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab"><i class="ti-truck"></i> Đang giao</a>
+                                    </li>
+                                    <li class="nav-item">||</li>
+                                    <li class=" nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#tabs-5" role="tab"><i class="ti-check-box"></i> Đã giao xong</a>
+                                    </li>
+                                    <li class="nav-item">||</li>
+                                    <li class=" nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab"><i class="ti-trash"></i> Đã hủy</a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tabs-3" role="tabpanel">
+                                        <div class="class__details">
+                                            @{ foreach (DONHANG h in hoadon)
+                                                {
+                                                    if (h.MAGIAOHANG == 1)
+                                                    {
+
+                                                        <div style="padding: 10px 0; border-top: 1px dashed;">
+
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                MÃ HĐ : @h.MADH <br />
+                                                            </span>
+                                                            <a href="@Url.Action("HuyDon", "Home", new { @madh =h.MADH })" class="btn btn-secondary" style="font-size: 1.2rem; margin-bottom: 10px;">Hủy Đơn</a>
+
+                                                            <br />
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                NGÀY ĐẶT : @h.NGAYDAT
+                                                            </span><br />
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                DỰ KIẾN GIAO : @h.NGAYGIAO
+                                                            </span>
+                                                            <br />
+
+                                                            <span style="font-weight: 600; font-size: 12px;color:red">
+                                                                TÌNH TRẠNG : @h.GIAOHANG.TRANGTHAI
+                                                            </span>
+                                                        </div>
+                                                        <span class="dots"></span>
+                                                        <div class="more" style="display:none">
+
+                                                            <div class="row" style="border-bottom: 1px solid #ccc;">
+                                                                <div class="col class__details-title">
+                                                                    <span>Hình Ảnh</span>
+                                                                </div>
+                                                                <div class="col class__details-title">
+                                                                    <span style="margin-left: 8px;">Tên</span>
+                                                                </div>
+
+                                                                <div class="col class__details-title">
+                                                                    <span style=" margin-left: 18px;">Đơn giá</span>
+                                                                </div>
+                                                                <div class="col class__details-title">
+                                                                    <span style="float: right;">Số lượng</span>
+                                                                </div>
+                                                                <div class="col class__details-title" style="padding-left:50px;">
+                                                                    <span style="float: right;">Thành Tiền</span>
+                                                                </div>
+
+                                                            </div>
+                                                            @foreach (CHITIETDH c in cthd)
+                                                            {
+                                                                if (c.MADH == h.MADH)
+                                                                {
+                                                                    <div class="row" style="padding-top: 12px;">
+                                                                        <div class="col class__details-content">
+                                                                            <img src="~/Images/img_sp/@getImg(c.MASP)" alt="" style="width: 80px; height:80px;">
+                                                                        </div>
+                                                                        <div class="col class__details-content">
+                                                                            <span>@getName(c.MASP)</span>
+                                                                        </div>
+
+                                                                        <div class="col class__details-content" style="">
+                                                                            <span>
+                                                                                @string.Format("{0:#,##0} VND", c.DONGIA)
+                                                                            </span>
+
+                                                                        </div>
+                                                                        <div class="col class__details-content">
+                                                                            <span style="margin-left: 90px; ">@c.SOLUONG</span>
+                                                                        </div>
+                                                                        <div class="col class__details-content" style="">
+                                                                            <span style="float: right;">@string.Format("{0:#,##0} VND", (c.SOLUONG * c.DONGIA))</span>
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                }
+                                                            }
+                                                            <div style="font-size: 16px; font-weight: 500; color: #111111; text-align: right; border-bottom: 1px solid #ccc; padding: 9px 0px; border-top: 1px solid #ccc;">
+                                                                Phí Ship : @string.Format("{0:#,##0} VND", (h.PHISHIP))
+                                                            </div>
+                                                            <div style="font-size: 16px; font-weight: 600; color: red; text-align: right; padding-top: 12px;">
+                                                                Tổng : @string.Format("{0:#,##0} VND", (cthd.Where(ps => ps.MADH == h.MADH).Sum(op => (op.DONGIA * op.SOLUONG))))
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-secondary js-detail" style="font-size: 1.2rem; margin-bottom: 10px;">Chi tiết</button>
+
+                                                    }
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabs-4" role="tabpanel">
+                                        <div class="class__details">
+                                            @{ foreach (DONHANG h in hoadon)
+                                                {
+                                                    if (h.MAGIAOHANG == 2)
+                                                    {
+
+                                                        <div style="padding: 10px 0; border-top: 1px dashed;">
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                MÃ HĐ : @h.MADH <br />
+                                                            </span>
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                NGÀY ĐẶT : @h.NGAYDAT
+                                                            </span><br />
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                DỰ KIẾN GIAO : @h.NGAYGIAO
+                                                            </span>
+                                                            <br />
+
+                                                            <span style="font-weight: 600; font-size: 12px; color: #0043ff ">
+                                                                TÌNH TRẠNG : @h.GIAOHANG.TRANGTHAI
+                                                            </span>
+                                                        </div>
+                                                        <span class="dots"></span>
+                                                        <div class="more" style="display:none">
+
+                                                            <div class="row" style="border-bottom: 1px solid #ccc;">
+                                                                <div class="col class__details-title">
+                                                                    <span>Hình Ảnh</span>
+                                                                </div>
+                                                                <div class="col class__details-title">
+                                                                    <span style="margin-left: 8px;">Tên</span>
+                                                                </div>
+
+                                                                <div class="col class__details-title">
+                                                                    <span style=" margin-left: 18px;">Đơn giá</span>
+                                                                </div>
+                                                                <div class="col class__details-title">
+                                                                    <span style="float: right;">Số lượng</span>
+                                                                </div>
+                                                                <div class="col class__details-title" style="padding-left:50px;">
+                                                                    <span style="float: right;">Thành Tiền</span>
+                                                                </div>
+
+                                                            </div>
+                                                            @foreach (CHITIETDH c in cthd)
+                                                            {
+                                                                if (c.MADH == h.MADH)
+                                                                {
+                                                                    <div class="row" style="padding-top: 12px;">
+                                                                        <div class="col class__details-content">
+                                                                            <img src="~/Images/img_sp/@getImg(c.MASP)" alt="" style="width: 80px; height:80px;">
+                                                                        </div>
+                                                                        <div class="col class__details-content">
+                                                                            <span>@getName(c.MASP)</span>
+                                                                        </div>
+
+                                                                        <div class="col class__details-content" style="">
+                                                                            <span>
+                                                                                @string.Format("{0:#,##0} VND", c.DONGIA)
+                                                                            </span>
+
+                                                                        </div>
+                                                                        <div class="col class__details-content">
+                                                                            <span style="margin-left: 90px; ">@c.SOLUONG</span>
+                                                                        </div>
+                                                                        <div class="col class__details-content" style="">
+                                                                            <span style="float: right;">@string.Format("{0:#,##0} VND", (c.SOLUONG * c.DONGIA))</span>
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                }
+                                                            }
+                                                            <div style="font-size: 16px; font-weight: 500; color: #111111; text-align: right; border-bottom: 1px solid #ccc; padding: 9px 0px; border-top: 1px solid #ccc;">
+                                                                Phí Ship : @string.Format("{0:#,##0} VND", (h.PHISHIP))
+                                                            </div>
+                                                            <div style="font-size: 16px; font-weight: 600; color: red; text-align: right; padding-top: 12px;">
+                                                                Tổng : @string.Format("{0:#,##0} VND", (cthd.Where(ps => ps.MADH == h.MADH).Sum(op => (op.DONGIA * op.SOLUONG))))
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-secondary js-detail" style="font-size: 1.2rem; margin-bottom: 10px;">Chi tiết</button>
+
+                                                    }
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabs-5" role="tabpanel">
+                                        <div class="class__details">
+                                            @{ foreach (DONHANG h in hoadon)
+                                                {
+                                                    if (h.MAGIAOHANG == 3)
+                                                    {
+
+                                                        <div style="padding: 10px 0; border-top: 1px dashed;">
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                MÃ HĐ : @h.MADH <br />
+                                                            </span>
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                NGÀY ĐẶT : @h.NGAYDAT
+                                                            </span><br />
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                DỰ KIẾN GIAO : @h.NGAYGIAO
+                                                            </span>
+                                                            <br />
+
+                                                            <span style="font-weight: 600; font-size: 12px; color: #0043ff">
+                                                                TÌNH TRẠNG : @h.GIAOHANG.TRANGTHAI
+                                                            </span>
+                                                        </div>
+                                                        <span class="dots"></span>
+                                                        <div class="more" style="display:none">
+
+                                                            <div class="row" style="border-bottom: 1px solid #ccc;">
+                                                                <div class="col class__details-title">
+                                                                    <span>Hình Ảnh</span>
+                                                                </div>
+                                                                <div class="col class__details-title">
+                                                                    <span style="margin-left: 8px;">Tên</span>
+                                                                </div>
+
+                                                                <div class="col class__details-title">
+                                                                    <span style=" margin-left: 18px;">Đơn giá</span>
+                                                                </div>
+                                                                <div class="col class__details-title">
+                                                                    <span style="float: right;">Số lượng</span>
+                                                                </div>
+                                                                <div class="col class__details-title" style="padding-left:50px;">
+                                                                    <span style="float: right;">Thành Tiền</span>
+                                                                </div>
+
+                                                            </div>
+                                                            @foreach (CHITIETDH c in cthd)
+                                                            {
+                                                                if (c.MADH == h.MADH)
+                                                                {
+                                                                    <div class="row" style="padding-top: 12px;">
+                                                                        <div class="col class__details-content">
+                                                                            <img src="~/Images/img_sp/@getImg(c.MASP)" alt="" style="width: 80px; height:80px;">
+                                                                        </div>
+                                                                        <div class="col class__details-content">
+                                                                            <span>@getName(c.MASP)</span>
+                                                                        </div>
+
+                                                                        <div class="col class__details-content" style="">
+                                                                            <span>
+                                                                                @string.Format("{0:#,##0} VND", c.DONGIA)
+                                                                            </span>
+
+                                                                        </div>
+                                                                        <div class="col class__details-content">
+                                                                            <span style="margin-left: 90px; ">@c.SOLUONG</span>
+                                                                        </div>
+                                                                        <div class="col class__details-content" style="">
+                                                                            <span style="float: right;">@string.Format("{0:#,##0} VND", (c.SOLUONG * c.DONGIA))</span>
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                }
+                                                            }
+                                                            <div style="font-size: 16px; font-weight: 500; color: #111111; text-align: right; border-bottom: 1px solid #ccc; padding: 9px 0px; border-top: 1px solid #ccc;">
+                                                                Phí Ship : @string.Format("{0:#,##0} VND", (h.PHISHIP))
+                                                            </div>
+                                                            <div style="font-size: 16px; font-weight: 600; color: red; text-align: right; padding-top: 12px;">
+                                                                Tổng : @string.Format("{0:#,##0} VND", (cthd.Where(ps => ps.MADH == h.MADH).Sum(op => (op.DONGIA * op.SOLUONG))))
+                                                            </div>
+
+                                                        </div>
+                                                        <button class="btn btn-secondary js-detail" style="font-size: 1.2rem; margin-bottom: 10px;">Chi tiết</button>
+
+                                                    }
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabs-6" role="tabpanel">
+
+                                        <div class="class__details">
+                                            @{ foreach (DONHANG h in hoadon)
+                                                {
+                                                    if (h.MAGIAOHANG == 4)
+                                                    {
+
+                                                        <div style="padding: 10px 0; border-top: 1px dashed;">
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                MÃ HĐ : @h.MADH <br />
+                                                            </span>
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                NGÀY ĐẶT : @h.NGAYDAT
+                                                            </span><br />
+                                                            <span style="font-weight: 600; font-size: 12px;">
+                                                                DỰ KIẾN GIAO : @h.NGAYGIAO
+                                                            </span>
+                                                            <br />
+
+                                                            <span style="font-weight: 600; font-size: 12px;color:red">
+                                                                TÌNH TRẠNG : @h.GIAOHANG.TRANGTHAI
+                                                            </span>
+                                                        </div>
+                                                        <span class="dots"></span>
+                                                        <div class="more" style="display:none">
+
+                                                            <div class="row" style="border-bottom: 1px solid #ccc;">
+                                                                <div class="col class__details-title">
+                                                                    <span>Hình Ảnh</span>
+                                                                </div>
+                                                                <div class="col class__details-title">
+                                                                    <span style="margin-left: 8px;">Tên</span>
+                                                                </div>
+
+                                                                <div class="col class__details-title">
+                                                                    <span style=" margin-left: 18px;">Đơn giá</span>
+                                                                </div>
+                                                                <div class="col class__details-title">
+                                                                    <span style="float: right;">Số lượng</span>
+                                                                </div>
+                                                                <div class="col class__details-title" style="padding-left:50px;">
+                                                                    <span style="float: right;">Thành Tiền</span>
+                                                                </div>
+
+                                                            </div>
+                                                            @foreach (CHITIETDH c in cthd)
+                                                            {
+                                                                if (c.MADH == h.MADH)
+                                                                {
+                                                                    <div class="row" style="padding-top: 12px;">
+                                                                        <div class="col class__details-content">
+                                                                            <img src="~/Images/img_sp/@getImg(c.MASP)" alt="" style="width: 80px; height:80px;">
+                                                                        </div>
+                                                                        <div class="col class__details-content">
+                                                                            <span>@getName(c.MASP)</span>
+                                                                        </div>
+
+                                                                        <div class="col class__details-content" style="">
+                                                                            <span>
+                                                                                @string.Format("{0:#,##0} VND", c.DONGIA)
+                                                                            </span>
+
+                                                                        </div>
+                                                                        <div class="col class__details-content">
+                                                                            <span style="margin-left: 90px; ">@c.SOLUONG</span>
+                                                                        </div>
+                                                                        <div class="col class__details-content" style="">
+                                                                            <span style="float: right;">@string.Format("{0:#,##0} VND", (c.SOLUONG * c.DONGIA))</span>
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                }
+                                                            }
+                                                            <div style="font-size: 16px; font-weight: 500; color: #111111; text-align: right; border-bottom: 1px solid #ccc; padding: 9px 0px; border-top: 1px solid #ccc;">
+                                                                Phí Ship : @string.Format("{0:#,##0} VND", (h.PHISHIP))
+                                                            </div>
+                                                            <div style="font-size: 16px; font-weight: 600; color: red; text-align: right; padding-top: 12px;">
+                                                                Tổng : @string.Format("{0:#,##0} VND", (cthd.Where(ps => ps.MADH == h.MADH).Sum(op => (op.DONGIA * op.SOLUONG))))
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-secondary js-detail" style="font-size: 1.2rem; margin-bottom: 10px;">Chi tiết</button>
+
+                                                    }
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-7" role="tabpanel">
+                            <h6>YÊU CẦU TRẢ HÀNG CỦA BẠN ( @ipth.Count() )</h6>
+                            <div class="class__details">
+                                @{ foreach (PHIEUTRAHANG t in ipth)
+                                    {
+
+
+                                        <div style="padding: 10px 0; border-top: 1px dashed;">
+                                            <span style="font-weight: 600; font-size: 12px;">
+                                                Mã Phiếu trả hàng : @t.MAPHIEU <br />
+                                            </span>
+                                            <span style="font-weight: 600; font-size: 12px;">
+                                                NGÀY GỬI : @t.NGAYTRA
+                                            </span><br />
+                                            <span style="font-weight: 600; font-size: 12px;">
+                                                Lý Do : @t.LYDO
+                                            </span>
+                                            <br />
+                                            <span style="font-weight: 600; font-size: 12px;color:red">
+                                                TÌNH TRẠNG : Đã Gửi
+                                            </span>
+                                            <br />
+                                            <span style="font-weight: 600; font-size: 12px;">
+                                                Hình Ảnh
+                                            </span>
+                                            <br />
+                                            <img src="~/Images/img_trahang/@t.HINHANH" alt="Alternate Text" style="width: 150px; border: 1px solid" />
+                                        </div>
+
+
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Content/JavaScript.js"></script>
+<script>
+    var dots = document.querySelectorAll(".dots");
+    var moreText = document.querySelectorAll(".more");
+    var btnText = document.querySelectorAll(".js-detail");
+
+    btnText.forEach((item, idx) => {
+        item.addEventListener('click', (e) => {
+            dots.forEach((item, index) => {
+                if (idx === index) {
+                    if (dots[index].style.display === "none") {
+                        dots[index].style.display = "inline";
+                        moreText[index].style.display = "none"
+                        btnText[index].innerHTML = "Chi tiết";
+                    }
+                    else {
+                        dots[index].style.display = "none";
+                        moreText[index].style.display = "inline";
+                        btnText[index].innerHTML = "Ẩn đi";
+                    }
+                }
+            });
+        })
+    })
+</script>

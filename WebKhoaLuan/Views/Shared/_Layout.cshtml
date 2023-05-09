@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - DỤNG CỤ LÀM BÁNH</title>
+    <!--Boostrap & FFamily-->
+    <link href="~/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!--CSS-->
+    <link href="~/Content/base.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/fonts/fontawesome/css/all.css" rel="stylesheet" />
+    <!--Font-->
+    <link href="~/fonts/themify-icons/themify-icons.css" rel="stylesheet" />
+    <link href="~/fonts/elegant_font/HTML CSS/eleganticons.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/css/magnific-popup.css" rel="stylesheet" />
+    <link href="~/Content/css/slicknav.min.css" rel="stylesheet" />
+    <link href="~/Content/css/owl.carousel.min.css" rel="stylesheet" />
+
+
+    <!--Script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    <div class="container-fluid " style="padding: 0">
+        <!--Header-->
+        <header class="header">
+
+            <div class="row align-items-center">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="@Url.Action("Index", "Home")">
+                            <img src="~/Images/logobakernew.jpg" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class=""><a href="@Url.Action("Index", "Home")">TRANG CHỦ</a></li>
+                            <li><a href="@Url.Action("SanPhamPartial", "SanPham")">SẢN PHẨM</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="@Url.Action("GioiThieu", "Home")">GIỚI THIỆU</a></li>
+                            <li><a href="#">LIÊN HỆ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                        @Html.Action("KhachHangNow", "Home")
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu" class="mobile-menu-btn">
+                <i class="fa fa-bars"></i>
+            </div>
+
+        </header>
+
+
+
+        <!--Nội dung-->
+        <div class="renderbody " style="padding-top: 4%;">
+            @RenderBody()
+        </div>
+        <div class="pic__bottom">
+            <img src="~/Images/img_news/picture_bottom.jpg" />
+        </div>
+        <!--Footer-->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <h3 class="footer__heading">Giới thiệu</h3>
+                        <ul class="footer-list">
+                            <li class="footer--item">
+                                <a href="@Url.Action("GioiThieu", "Home")" class="footer-item__link">Giới thiệu</a>
+                            </li>
+                            <li class="footer--item">
+                                <a href="@Url.Action("ChinhSach", "Home")" class="footer-item__link">Chính sách</a>
+                            </li>
+                            <li class="footer--item">
+                                <a href="@Url.Action("TuyenDung", "Home")" class="footer-item__link">Tuyển dụng</a>
+                            </li>
+                            <li class="footer--item">
+                                <a href="" class="footer-item__link">Điều khoản</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <h3 class="footer__heading">Chăm sóc khách hàng</h3>
+                        <ul class="footer-list">
+                            <li class="footer--item">
+                                <a href="" class="footer-item__link">Trung tâm trợ giúp</a>
+                            </li>
+                            <li class="footer--item">
+                                <a href="" class="footer-item__link">Baker's Mart</a>
+                            </li>
+                            <li class="footer--item">
+                                <a href="" class="footer-item__link">Hướng dẫn mua hàng</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <h3 class="footer__heading">Trụ sở chính</h3>
+                        <div class="footer_location">
+                            <p>CỦA HÀNG DỤNG CỤ LÀM BÁNH BAKER'S HOUSE</p>
+                            <p> <img src="~/Images/nha.jpg" alt="Alternate Text" /> 140, Lê Trọng Tấn, Tân Phú, HCM</p>
+                            <p> <img src="~/Images/nha.jpg" alt="Alternate Text" /> Lầu 2, 155 Tân Kỳ Tân Quý, Tân Sơn Nhì, HCM</p>
+                            <p> <img src="~/Images/mail.jpg" alt="Alternate Text" /> dungculambanhhufi@gmail.com</p>
+                            <p> <img src="~/Images/dt.jpg" alt="Alternate Text" />Hotline: 034 321 3839</p>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <h3 class="footer__heading">Đường đi</h3>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.060180458358!2d106.62660881428722!3d10.806702861590368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752be2853ce7cd%3A0x4111b3b3c2aca14a!2zMTQwIEzDqiBUcuG7jW5nIFThuqVuLCBTxqFuIEvhu7MsIFTDom4gUGjDuiwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1634525775549!5m2!1svi!2s" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <div class="grid">
+                <p class="footer__text">© 2021 - Bản quyền thuộc về SV-Hufi  </p>
+            </div>
+        </div>
+    </div>
+    <div class="zalo_connec">
+        <a href="https://zalo.me/0988493930" target=_blank></a>
+    </div>
+    <button type="button"
+            class="btn btn-danger btn-floating btn-lg"
+            id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="~/Content/js/owl.carousel.min.js"></script>
+    <script src="~/Scripts/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/JavaScript.js"></script>
+    @* Chatbot *@
+    <script>
+        !function (s, u, b, i, z) { var o, t, r, y; s[i] || (s._sbzaccid = z, s[i] = function () { s[i].q.push(arguments) }, s[i].q = [], s[i]("setAccount", z), r = ["widget.subiz.net", "storage.googleapis" + (t = ".com"), "app.sbz.workers.dev", i + "a" + (o = function (k, t) { var n = t <= 6 ? 5 : o(k, t - 1) + o(k, t - 3); return k !== t ? n : n.toString(32) })(20, 20) + t, i + "b" + o(30, 30) + t, i + "c" + o(40, 40) + t], (y = function (k) { var t, n; s._subiz_init_2094850928430 || r[k] && (t = u.createElement(b), n = u.getElementsByTagName(b)[0], t.async = 1, t.src = "https://" + r[k] + "/sbz/app.js?accid=" + z, n.parentNode.insertBefore(t, n), setTimeout(y, 2e3, k + 1)) })(0)) }(window, document, "script", "subiz", "acqwlkwvhqhjfvxsigka")
+    </script>
+</body>
+</html>

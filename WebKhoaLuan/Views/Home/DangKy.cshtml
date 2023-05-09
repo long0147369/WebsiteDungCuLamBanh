@@ -1,0 +1,81 @@
+﻿@model WebKhoaLuan.Models.RegisterViewModel
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (@Html.BeginForm("DangKy", "Home", FormMethod.Post))
+{
+    <section class="checkout spad">
+        <div class="login js-popup-login">
+            <div class="popup-wrap js-popup-cont">
+                <div class="form" action="/Home/DangKy" method="post">
+                    <h2 style="text-align: center;">Đăng ký</h2>
+                    <div class="text">
+                        <label for="text">Họ và tên</label>
+                    </div>
+                    <div class="form-element">
+                        <input type="text" id="Name" name="txtName" placeholder="Nhập vào họ tên của bạn" required>
+                    </div>
+                    <div class="text">
+                        <label for="email">Email</label><br />
+                        <small id="hasUser" style="color: red; font-size:1.4rem">@ViewBag.hasMail</small>
+                    </div>
+                    <div class="form-element">
+                        <input type="email" id="Email" name="Email" placeholder="Nhập vào tài khoản email của bạn" required>
+                    </div>
+                    <div class="text">
+                        <label for="text">Tên đăng nhập</label><br />
+                        <small id="hasUser" style="color: red; font-size:1.4rem">@ViewBag.hasUser</small>
+                    </div>
+                    <div class="form-element">
+                        <input type="text" id="UserName" name="UserName" placeholder="Nhập vào tên đăng nhập của bạn" required>
+                    </div>
+                    <div class="text">
+                        <label for="password">Mật khẩu</label>
+                    </div>
+                    <div class="form-element">
+                        <input type="password" id="Password" name="Password" placeholder="Nhập vào mật khẩu của bạn" required>
+                    </div>
+                    <div class="text">
+                        <label for="password">Xác nhận Mật khẩu</label>
+                    </div>
+                    <div class="form-element">
+                        <input type="password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Nhập lại mật khẩu của bạn" required>
+                    </div>
+                    <div class="text">
+                        <label for="number">Số điện thoại</label>
+                    </div>
+                    <div class="form-element">
+                        <input type="text" id="PhoneNumber" name="PhoneNumber" placeholder="Nhập vào số điện thoại của bạn" required>
+                        @*@Html.EditorFor(m => m.PhoneNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PhoneNumber)*@
+                    </div>
+                    <div class="text">
+                        <label for="number">Địa chỉ</label>
+                    </div>
+                    <div class="form-element">
+                        <input type="text" id="diachi" name="txtDiachi" placeholder="Nhập vào Địa chỉ của bạn" required>
+                    </div>
+                    <div class=form-element>
+                        <button type="submit">Đăng ký</button>
+                    </div>
+
+                </div>
+
+                <div class="form-diff">
+                    <p>Hoặc đăng nhập với</p>
+                    <div class="social-media">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-google"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>}
+

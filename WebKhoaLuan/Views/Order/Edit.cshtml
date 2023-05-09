@@ -1,0 +1,143 @@
+﻿@model WebKhoaLuan.Models.DONHANG
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<style>
+    .form-row {
+        display: flex;
+        /* flex-wrap: wrap;*/
+        margin-right: -5px;
+        margin-left: -5px;
+    }
+
+    .form-group {
+        margin-left: 30px;
+        margin-bottom: 20px;
+        min-width: 400px;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+        .form-control:disabled, .form-control[readonly] {
+            background-color: #e9ecef;
+            opacity: 1;
+        }
+</style>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+</div>
+
+<div class="create_product" style="margin-left:15px;">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h2 style="text-align:center;">Cập nhật trạng thái đơn hàng</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MADH)
+
+            <div class="form-row" style=" margin-top: 20px;">
+                <div class="form-group col-md-4">
+                    <p style="margin:10px">Tên User:</p>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.USERNAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <p style="margin:10px">Địa chỉ:</p>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DIACHI, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.DIACHI, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group col-md-4">
+                    <p style="margin:10px">SĐT:</p>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SDTGIAO, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.SDTGIAO, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <p style="margin:10px">Ngày đặt:</p>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NGAYDAT, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.NGAYDAT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <p style="margin:10px">Phí ship:</p>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PHISHIP, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.PHISHIP, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <p style="margin:10px">Tổng tiền:</p>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TONGTIEN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.TONGTIEN, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <p style="margin:10px">Phương thức thanh toán:</p>
+                    <div class="col-md-10">
+                        @Html.DropDownList("MAPTTT", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.MAPTTT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    Trạng thái đơn hàng:
+                    <div class="col-md-10" style="padding: 10px 140px;">
+                        @Html.DropDownListFor(model => model.MAGIAOHANG, new SelectList(Model.DHCollection, "MAGIAOHANG", "TRANGTHAI"))
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Cập nhật trạng thái" class="btn btn-default" style="color:#ffffff;padding: 12px 32px; cursor: pointer; background-color:#28A745" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        <a style="background-color: blue; margin: 28px; margin-left: 43px;" href="@Url.Action("DangGiao", "Order")" role="button" class="btn btn-primary"><i class="fas fa-long-arrow-alt-left"> Quay lại</i></a>
+    </div>
+</div>

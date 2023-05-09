@@ -1,0 +1,99 @@
+﻿@model IEnumerable<WebKhoaLuan.Models.SANPHAM>
+
+@{
+    ViewBag.Title = "DSSPHetHang";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<style>
+    .pagination {
+        margin-top: 20px;
+        box-sizing: border-box;
+        justify-content: center;
+        list-style: none;
+        display: flex;
+    }
+
+        .pagination li a {
+            display: inline-block;
+            height: 40px;
+            width: 40px;
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            font-size: 14px;
+            color: #111111;
+            font-weight: 600;
+            line-height: 40px;
+            text-align: center;
+            -webkit-transition: all, 0.3s;
+            -o-transition: all, 0.3s;
+            transition: all, 0.3s;
+            margin-right: 6px;
+        }
+
+            .pagination li a:last-child {
+                margin-right: 0;
+            }
+
+        .pagination li.active a {
+            background: #000;
+            color: #fff;
+        }
+
+        .pagination li a i {
+            font-weight: 600;
+        }
+
+        .pagination li a:hover {
+            background: #0d0d0d;
+            border-color: #0d0d0d;
+            color: #ffffff;
+        }
+</style>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+    <!-- search -->
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+
+<div class="details" style="display:inline-block; font-size:13px;">
+    <div class="recentOrders">
+        <div class="cardHeader">
+            <h2>Danh sách Sản phẩm sắp hết hàng</h2>
+            <a href="@Url.Action("DatHang", "DatHang")" role="button" class="btn btn-success mt-3" style="background-color:#28A745"><i class="fas fa-cart-plus"></i> Đặt hàng</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td style="text-align: start;">Tên sản phẩm</td>
+                    <td style="text-align: start;">Nhà cung cấp</td>
+                    <td style="text-align: start;">Số lượng còn lại</td>
+                    <td style="text-align: start;">Hình</td>
+                    <td style="text-align: start;">Giá</td>
+                    <td style="text-align: start;">Hạn sử dụng</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.TENSP)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.NHACC.TENNCC)</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.SOLUONG)</td>
+                        <td style="text-align: start;"><img style="width: 100px; height: 100px; border-radius: 10px; border: 1px solid #007bff;" src="@Url.Content("~/Images/img_sp/" + item.HINH)" /></td>
+                        <td style="text-align: start;">@String.Format("{0:0,0}", item.GIAGOC) VNĐ</td>
+                        <td style="text-align: start;">@Html.DisplayFor(modelItem => item.HANSUDUNG) Tháng</td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+
+
+    </div>
+</div>

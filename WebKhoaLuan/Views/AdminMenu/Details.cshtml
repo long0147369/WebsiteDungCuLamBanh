@@ -1,0 +1,88 @@
+﻿@model WebKhoaLuan.Models.SANPHAM
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .description-text {
+        margin: 10px;
+    }
+
+    .fixtext {
+        color: red;
+    }
+
+    .ChiTietDH {
+        margin-left: 50px;
+        margin-right: 50px;
+        border: 1px solid;
+        border-radius: 9px;
+        box-shadow: 0 7px 25px rgb(0 0 0 / 8%);
+    }
+</style>
+<div class="topbar">
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+
+    <!-- UserImg -->
+    <div class="user">
+        <img src="~/Images/logo-hufi.jpg" />
+    </div>
+</div>
+
+
+<h2 style="text-align:center;margin-top:15px">THÔNG TIN SẢN PHẨM</h2>
+
+
+<div class="ChiTietDH">
+    <table class="table" id="table">
+
+
+        <tr>
+            <td colspan="4" style="border-top: 0px solid #ffffff;"><img class="product-img" style="height: 260px; border-radius: 10%; margin-top: 20px; margin-left: 39%; border: 1px solid #007bff; " src="@Url.Content("~/Images/img_sp/" + Model.HINH)" alt="Ảnh Sản Phẩm" /></td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>Tên sản phẩm: </b>@Model.TENSP</td>
+            <td colspan="1"><b>Mã SP: </b>@Model.MASP</td>
+
+
+        </tr>
+        <tr>
+            @if (@Model.MUCKM != 0)
+            {
+                <td colspan="2"><b>Giá: </b><span class="detail__content-priceold" style="text-decoration: line-through; font-size: 1rem ">@String.Format("{0:0,0} VNĐ", @Model.GIAGOC) </span></td>
+
+                <td colspan="1"><b>Mức KM:</b> @Model.MUCKM %</td>
+
+                <td colspan="1"><b>Giá Bán: <span class="detail__content-priceold" style="text-decoration: none;font-size: 1rem;color:#000">@string.Format("{0:#,##0} VNĐ", (Model.GIAGOC - (Model.GIAGOC * Model.MUCKM) / 100))</span></b></td>
+
+            }
+            else
+            {
+                <td colspan="4"><b>Giá: </b><span class="detail__content-priceold" style="text-decoration: none;font-size: 1rem; color: #000">@String.Format("{0:0,0}", @Model.GIAGOC) VNĐ</span></td>
+
+            }
+        </tr>
+        <tr>
+            <td colspan="2"><b>Trọng lượng: </b> @Model.TRONGLUONG</td>
+            <td colspan="1"><b>Số lượng: </b> @Model.SOLUONG</td>
+
+            <td colspan="1"><b>Xuất xứ: </b> @Model.XUATXU</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>Thành phần: </b> @Model.THANHPHAN</td>
+            <td colspan="2"><b>Cách dùng: </b> @Model.CACHDUNG</td>
+        </tr>
+        <tr>
+            <td colspan="4"><b>Mô tả: </b> @Model.MOTA</td>
+        </tr>
+    </table>
+</div>
+<div>
+
+    <a style=" margin: 28px; margin-left: 43px;" href="@Url.Action("Index", "AdminMenu")" role="button" class="btn btn-primary"><i class="fas fa-angle-left"></i> Trở về</a>
+    <a style="background-color: forestgreen; margin-left: -26px " href="@Url.Action("Edit", "AdminMenu", new { id = Model.MASP})" role="button" class="btn btn-primary"><i class="fa fa-edit"> Chỉnh sửa</i></a>
+    <a style="background-color: #ff4d4d; margin: 4px;" href="@Url.Action("Delete", "AdminMenu", new { masp = Model.MASP })" role="button" class="btn btn-primary"><i class="far fa-trash-alt"> Xóa sản phẩm</i></a>
+</div>

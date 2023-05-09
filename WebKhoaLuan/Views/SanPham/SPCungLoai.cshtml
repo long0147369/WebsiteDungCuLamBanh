@@ -1,0 +1,27 @@
+﻿@using WebKhoaLuan.Models;
+@model List<SANPHAM>
+
+
+<div class="row">
+    @{
+        foreach (var item in Model)
+        {
+            <div class="col" style=" text-align: center; margin-bottom: 32px">
+
+                <a class="home-product-item" href="@Url.Action("XemChiTiet","SanPham", new { @ms = item.MASP })">
+                    <div class="home-product-item__img" style="background-image:url(@Url.Content("~/Images/img_sp/" + item.HINH) ) ;"></div>
+                    <h4 class="home-product-item__name">
+                        @item.TENSP
+                    </h4>
+                    <div class="homepage-product-item__price">
+                        <span class="home-product-item__price-current"> @string.Format("{0:#,##0} VNĐ", (item.GIAGOC - (item.GIAGOC * item.MUCKM) / 100))</span>
+                    </div>
+                </a>
+                <a href="@Url.Action("ThemGioHang", "GioHang", new { ms = item.MASP, @strURL = Request.Url.ToString() })" name="" class="btn detail__content-btn-addcart">
+                    <i class="fas fa-cart-plus" style="padding-right: 4px;"></i>
+                    Mua nhanh
+                </a>
+            </div>
+        }
+    }
+</div>
