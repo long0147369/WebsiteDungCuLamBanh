@@ -1,0 +1,24 @@
+Các bước để Chạy Website:
+Bước 1: Chạy file QL_LAMBANH.sql
+Bước 2: - Khởi động WebKhoaLuan.sln
+	- Cài đặt lại liên kết với SQL trong file web.config
+	- Import :
+
+	[NotMapped]
+        public List<GIAOHANG> DHCollection { get; set; } 
+
+	ở DONHANG.cs
+
+
+	public DONHANG()
+        {
+            this.CHITIETDHs = new HashSet<CHITIETDH>();
+            this.PHIEUTRAHANGs = new HashSet<PHIEUTRAHANG>();
+            this.THONGBAOs = new HashSet<THONGBAO>();
+        }
+	- Khởi chạy với 1 trình duyệt: Google Chorome
+Bước 3: Khởi chạy App Mobile
+	- Thay đổi cấu hình IPV4 tại File SERVER.java
+	- Tạo 1 Tài khoản Để kết nối SQL Sercver
+	- Khởi chạy
+        
